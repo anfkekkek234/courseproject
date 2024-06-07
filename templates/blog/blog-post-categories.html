@@ -1,0 +1,15 @@
+{% load static %}
+<div class="sidebar-widget bg-white rounded tags p-4 mb-3">
+		<h5 class="mb-4">Category</h5>
+
+        {% for name,count in categories.items %}
+       
+            <a href="{% url "blog:category" cat_name=name %}" class="d-flex justify-content-between">
+                <p>{{ name }}</p>
+                <p>{{ count }}</p>
+            </a>
+        
+        
+         {% endfor %}                                           
+    
+	</div>

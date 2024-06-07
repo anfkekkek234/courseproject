@@ -39,12 +39,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
-    'captcha'
+    'blog.apps.BlogConfig',
+    'captcha',
+    'django.contrib.humanize',
+    'django_extensions',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'robots',
+    'debug_toolbar',
+    'taggit',
+    'django_summernote',
+    'accounts.apps.AccountsConfig',
+    'compressor'
 ]
 # captcha admin settings
 MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
 }
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'courseproject.urls'
@@ -113,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -136,3 +150,45 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    'accounts.backends.UsernameOrEmailBackend',    # Custom backend
+]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # آدرس صحیح SMTP سرور
+EMAIL_PORT = 587  # یا پورت مناسب دیگر (25، 465، ...)
+EMAIL_USE_TLS = True  # یا EMAIL_USE_SSL اگر سرور از SSL استفاده می‌کند
+EMAIL_HOST_USER = 'awp.828.cr7@gmail.com'
+EMAIL_HOST_PASSWORD = 'tiumbwivxzctbdnx'
+DEFAULT_FROM_EMAIL = 'awp.828.cr7@gmail.com'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+]
